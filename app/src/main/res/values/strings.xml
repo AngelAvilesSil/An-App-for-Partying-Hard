@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">UltimateProjectParty</string>
+    <string name="invited_title">Manage Invitees</string>
+    <string name="shopping_title">Manage Shopping</string>
+    <string name="summary_invitee_title">Invitee List</string>
+    <string name="summary_shopping_title">Shopping List</string>
+    <string name="start_title">Start the party</string>
+    <string name="name_enter">Name:</string>
+    <string name="lastname_enter">Last Name:</string>
+    <string name="phone_enter">Phone:</string>
+    <string name="email_enter">E-mail:</string>
+    <string name="name_hint">John</string>
+    <string name="lastname_hint">Smith</string>
+    <string name="phone_hint">(XXX) XXX-XXXX</string>
+    <string name="email_hint">john.smith13@google.com</string>
+    <string name="inv_subtitle_input">Enter Invitee\'s Info</string>
+    <string name="enter_invitee_button">Add Invitee</string>
+    <string name="shop_subtitle_input">Enter shopping item</string>
+    <string name="item_prompt">Item:</string>
+    <string name="type_enter">Type:</string>
+    <string name="qty_enter">Quantity:</string>
+    <string name="exp_price_enter">Quoted price:</string>
+    <string name="item_hint">Funny juice bottles</string>
+    <string name="qty_hint">10</string>
+    <string name="price_hint">$120.00</string>
+    <string-array name="type_of_shopping">
+        <item>Miscellaneous</item>
+        <item>Beverages</item>
+        <item>Food</item>
+        <item>Decorations</item>
+        <item>Snacks</item>
+        <item>Tableware</item>
+        <item>Illumination</item>
+        <item>Party toys</item>
+    </string-array>
+    <string name="enter_shop_button">Enter item</string>
+    <string name="eve_subtitle_input">Enter Event Info</string>
+    <string name="event_enter">Event:</string>
+    <string name="datetime_prompt">Time of event:</string>
+    <string name="time_input">Click to enter time</string>
+    <string name="enter_event_input">Add event</string>
+    <string name="on_off_input">on/off</string>
+    <string name="event_hint">Dancing aound!</string>
+
+    <string name="music_enter">Play music:</string>
+    <string name="food_enter">Serve food:</string>
+    <string name="snack_enter">Serve snacks:</string>
+    <string name="alcohol_enter">Serve alcohol:</string>
+    <string name="food_enter_short">Food</string>
+    <string name="snack_enter_short">Snacks</string>
+    <string name="alcohol_input_short">Alcohol</string>
+    <string name="event_title">Manage Events</string>
+    <string name="summary_event_title">Event List</string>
+    <string name="music_on">Playing</string>
+    <string name="music_off">Not playing</string>
+</resources>

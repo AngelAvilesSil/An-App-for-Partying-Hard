@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_invided_manage"
+        android:title="@string/invited_title" />
+    <item
+        android:id="@+id/menu_shopping_manage"
+        android:title="@string/shopping_title" />
+    <item
+        android:id="@+id/menu_event_manage"
+        android:title="@string/event_title" />
+    <item
+        android:id="@+id/menu_invited_list"
+        android:title="@string/summary_invitee_title" />
+    <item
+        android:id="@+id/menu_shopping_list"
+        android:title="@string/summary_shopping_title" />
+    <item
+        android:id="@+id/menu_event_list"
+        android:title="@string/summary_event_title" />
+</menu>
