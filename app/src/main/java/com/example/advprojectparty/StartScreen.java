@@ -18,6 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.fragment.app.Fragment;
 
+import com.example.advprojectparty.DatabaseElements.PartyListDB;
+import com.example.advprojectparty.ManagementFragments.EventManageFragment;
+import com.example.advprojectparty.ManagementFragments.InviteeManageFragment;
+import com.example.advprojectparty.ManagementFragments.ShopManageFragment;
+import com.example.advprojectparty.SummaryFragments.SummaryEventFragment;
+import com.example.advprojectparty.SummaryFragments.SummaryInviteeFragment;
+import com.example.advprojectparty.SummaryFragments.SummaryShoppingFragment;
+
 import java.util.List;
 import java.util.Objects;
 

@@ -13,7 +13,7 @@
  *        FILE: DirectAndRoom
  */
 
-package com.example.advprojectparty;
+package com.example.advprojectparty.DatabaseElements;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

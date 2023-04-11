@@ -8,7 +8,7 @@
  * this access gets all the rows from the event_list table
  */
 
-package com.example.advprojectparty;
+package com.example.advprojectparty.DatabaseElements;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

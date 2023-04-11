@@ -7,7 +7,7 @@
  * At the moment, it possess only one access, and
  * this access gets all the rows from the shop_list table
  */
-package com.example.advprojectparty;
+package com.example.advprojectparty.DatabaseElements;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

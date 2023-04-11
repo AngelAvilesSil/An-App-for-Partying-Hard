@@ -9,7 +9,7 @@
 
         The items can be scrolled and viewed, but at the moment that is all
  */
-package com.example.advprojectparty;
+package com.example.advprojectparty.SummaryFragments;
 
 import android.database.MatrixCursor;
 import android.os.AsyncTask;
@@ -21,6 +21,11 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.advprojectparty.DatabaseElements.Event;
+import com.example.advprojectparty.DatabaseElements.PartyListDB;
+import com.example.advprojectparty.DatabaseElements.PartyListDatabase;
+import com.example.advprojectparty.R;
 
 import java.util.ArrayList;
 

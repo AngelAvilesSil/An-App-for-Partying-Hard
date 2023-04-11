@@ -17,7 +17,7 @@
 
         -Data validations makes sure no fields are left blank or invalid
  */
-package com.example.advprojectparty;
+package com.example.advprojectparty.ManagementFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +28,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.advprojectparty.DatabaseElements.Invitee;
+import com.example.advprojectparty.DatabaseElements.PartyListDatabase;
+import com.example.advprojectparty.R;
 
 public class InviteeManageFragment extends Fragment {
 

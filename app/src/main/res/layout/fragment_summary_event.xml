@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
-    tools:context=".SummaryEventFragment"
+    tools:context=".SummaryFragments.SummaryEventFragment"
     android:baselineAligned="false">
 
     <ListView

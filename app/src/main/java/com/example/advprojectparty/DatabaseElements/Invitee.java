@@ -12,7 +12,7 @@
  *       -This class will be created every time a row from the invite_list table is entered.
  *
  */
-package com.example.advprojectparty;
+package com.example.advprojectparty.DatabaseElements;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
