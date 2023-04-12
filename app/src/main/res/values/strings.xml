@@ -53,4 +53,5 @@
     <string name="summary_event_title">Event List</string>
     <string name="music_on">Playing</string>
     <string name="music_off">Not playing</string>
+    <string name="enter_contacts_button">Invite all your contacts!</string>
 </resources>

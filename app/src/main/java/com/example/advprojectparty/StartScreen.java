@@ -9,8 +9,12 @@
 
 package com.example.advprojectparty;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -31,20 +35,56 @@ import java.util.Objects;
 
 public class StartScreen extends AppCompatActivity {
 
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+
     PartyListDB database = null;
+    private static boolean grantedContacts = false;
+
+    // Accessor that will serve as a switch for the
+    // contacts addition
+    public static boolean getGrantedContacts(){
+        return grantedContacts;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
 
-        getSupportActionBar().setTitle(getString(R.string.start_title));
+        // This is the title bar which will contain the name of the
+        // fragment in every section of the app
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.start_title));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+            && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+        } else {
+            grantedContacts = true;
+        }
 
         // This should pull the database or create it
         // with all its components if it does not exists
         database = new PartyListDB(this);
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_READ_CONTACTS: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    grantedContacts = true;
+                } else {
+                    // permission denied, nothing else to do
+                    // actually, the bool is the only thing that
+                    // will permit the button to add the contacts
+                    // to work, otherwise it will do nothing
+                    Log.d("My App", "permission denied");
+                }
+            }
+        }
+    }
 
     /* This is what will inflate the menu from this activity */
     @SuppressLint("RestrictedApi")
@@ -62,7 +102,7 @@ public class StartScreen extends AppCompatActivity {
 
         // From here and below all the fragment are called as per
         // choice from the menu.
-        List<Fragment> listFrag = null;
+        List<Fragment> listFrag;
         switch (item.getItemId()) {
             case R.id.menu_invided_manage:
                 try {

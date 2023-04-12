@@ -32,18 +32,21 @@ import androidx.fragment.app.Fragment;
 import com.example.advprojectparty.DatabaseElements.Invitee;
 import com.example.advprojectparty.DatabaseElements.PartyListDatabase;
 import com.example.advprojectparty.R;
+import com.example.advprojectparty.StartScreen;
 
 public class InviteeManageFragment extends Fragment {
 
     Button insertButton = null;
+    Button contactButton = null;
     EditText invNameInput = null;
     EditText invLastNameInput = null;
     EditText invPhoneInput = null;
     EditText invEmailInput = null;
+    Boolean contactsPermitted = false;
 
 
     public InviteeManageFragment() {
-        /** Required empty public constructor */
+        /* Required empty public constructor */
     }
 
     @Override
@@ -58,41 +61,57 @@ public class InviteeManageFragment extends Fragment {
         View thisView = inflater.inflate(R.layout.fragment_invited_manage,
                 container, false);
         insertButton = thisView.findViewById(R.id.button_enter_invitee);
+        contactButton = thisView.findViewById(R.id.button_contacts_invitee);
         invNameInput = thisView.findViewById(R.id.name_input);
         invLastNameInput = thisView.findViewById(R.id.lastname_input);
         invPhoneInput = thisView.findViewById(R.id.phone_input);
         invEmailInput = thisView.findViewById(R.id.email_input);
+        contactsPermitted = StartScreen.getGrantedContacts();
 
-        // The trigger of the action that should be completed in this
-        // fragment once the user pushes the button
-        insertButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String theName = invNameInput.getText().toString();
-                String theLastname = invLastNameInput.getText().toString();
-                String thePhone = invPhoneInput.getText().toString();
-                String theEmail = invEmailInput.getText().toString();
+        if (contactsPermitted.equals(false)) {
+            contactButton.setVisibility(View.INVISIBLE);
+        }
 
-                if (!theName.equals("") && !theLastname.equals("")
-                && !thePhone.equals("") && !theEmail.equals(""))
-                {
-                    PartyListDatabase db = PartyListDatabase.getInstance(getContext());
-                    db.getInviteeDao().insert(new Invitee(theName,theLastname,thePhone,theEmail));
+        // The trigger actions that should add a single contact
+        // entered manually in the invitee list
+        insertButton.setOnClickListener(v -> {
+            String theName = invNameInput.getText().toString();
+            String theLastname = invLastNameInput.getText().toString();
+            String thePhone = invPhoneInput.getText().toString();
+            String theEmail = invEmailInput.getText().toString();
 
-                    invNameInput.setText(""); invLastNameInput.setText("");
-                    invPhoneInput.setText(""); invEmailInput.setText("");
+            if (!theName.equals("") && !theLastname.equals("")
+            && !thePhone.equals("") && !theEmail.equals(""))
+            {
+                PartyListDatabase db = PartyListDatabase.getInstance(getContext());
+                db.getInviteeDao().insert(new Invitee(theName,theLastname,thePhone,theEmail));
 
-                    Toast t = Toast.makeText(getContext(), "You have a new invitee!", Toast.LENGTH_SHORT);
-                    t.show();
-                }
-                else
-                {
-                    Toast t = Toast.makeText(getContext(), "Nothing can be empty", Toast.LENGTH_SHORT);
-                    t.show();
-                }
+                invNameInput.setText(""); invLastNameInput.setText("");
+                invPhoneInput.setText(""); invEmailInput.setText("");
+
+                Toast t = Toast.makeText(getContext(), "You have a new invitee!", Toast.LENGTH_SHORT);
+                t.show();
+            }
+            else
+            {
+                Toast t = Toast.makeText(getContext(), "Nothing can be empty", Toast.LENGTH_SHORT);
+                t.show();
             }
         });
 
+        // The trigger of the actions that should add all the contacts
+        // from the phone in the invitee list
+        contactButton.setOnClickListener(v -> {
+
+        });
+
         return thisView;
+    }
+
+    public void getContacts() {
+        String email;
+        String phoneNumber;
+        String name;
+        String lastName;
     }
 }

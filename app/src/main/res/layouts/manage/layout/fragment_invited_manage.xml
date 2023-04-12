@@ -141,10 +141,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/enter_invitee_button"
+                android:paddingBottom="5dp"
+                android:minHeight="48dp"
                 app:layout_column="1"
                 app:layout_columnSpan="2"
                 app:layout_gravity="center_horizontal|center_vertical"
                 app:layout_row="6" />
+
+            <Button
+                android:id="@+id/button_contacts_invitee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:paddingBottom="5dp"
+                android:text="@string/enter_contacts_button"
+                app:layout_column="1"
+                app:layout_columnSpan="2"
+                app:layout_gravity="center_horizontal|center_vertical"
+                app:layout_row="7" />
         </androidx.gridlayout.widget.GridLayout>
 
         <androidx.gridlayout.widget.GridLayout
