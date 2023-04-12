@@ -11,6 +11,7 @@ package com.example.advprojectparty;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,16 +36,17 @@ import java.util.Objects;
 
 public class StartScreen extends AppCompatActivity {
 
-    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
-
     PartyListDB database = null;
     private static boolean grantedContacts = false;
+    private static Context contextOfApplication;
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
     // Accessor that will serve as a switch for the
     // contacts addition
     public static boolean getGrantedContacts(){
         return grantedContacts;
     }
+    public static Context getContextOfApplication() { return contextOfApplication; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class StartScreen extends AppCompatActivity {
         // This is the title bar which will contain the name of the
         // fragment in every section of the app
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.start_title));
+        contextOfApplication = getApplicationContext();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
             && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {

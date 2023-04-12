@@ -19,7 +19,12 @@
  */
 package com.example.advprojectparty.ManagementFragments;
 
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,17 +106,74 @@ public class InviteeManageFragment extends Fragment {
 
         // The trigger of the actions that should add all the contacts
         // from the phone in the invitee list
-        contactButton.setOnClickListener(v -> {
-
-        });
+        contactButton.setOnClickListener(v -> getContacts());
 
         return thisView;
     }
 
     public void getContacts() {
-        String email;
-        String phoneNumber;
-        String name;
-        String lastName;
+        Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
+        Uri CONTACTS_URI = ContactsContract.Data.CONTENT_URI;
+        String CONTACTS_MIME = ContactsContract.Data.MIMETYPE;
+        String _ID = ContactsContract.Contacts._ID;
+        String NAME_ID = ContactsContract.CommonDataKinds.StructuredName.CONTACT_ID;
+        String GIVEN_NAME = ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME;
+        String FAMILY_NAME = ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME;
+        String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
+        Uri PhoneCONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String Phone_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
+        String NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
+        Uri EmailCONTENT_URI =  ContactsContract.CommonDataKinds.Email.CONTENT_URI;
+        String EmailCONTACT_ID = ContactsContract.CommonDataKinds.Email.CONTACT_ID;
+        String EMAIL = ContactsContract.CommonDataKinds.Email.DATA;
+        // getting the content resolver is a bit different, since we are in a fragment
+        Context applicationContext = StartScreen.getContextOfApplication();
+        ContentResolver contentResolver = applicationContext.getContentResolver();
+        Cursor cursor = contentResolver.query(CONTENT_URI, null, null,
+                                    null,null);
+
+        // Loop for all contacts in the phone
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String contact_id = cursor.getString(cursor.getColumnIndexOrThrow(_ID));
+                String[] whereNameParams = new String[] { ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE, contact_id };
+                Cursor nameCursor = contentResolver.query(CONTACTS_URI, null, CONTACTS_MIME + " = ? AND " + NAME_ID + " = ?",
+                                                            whereNameParams, GIVEN_NAME);
+                nameCursor.moveToFirst();
+                String name = nameCursor.getString(nameCursor.getColumnIndexOrThrow(GIVEN_NAME));
+                String lastName = nameCursor.getString(nameCursor.getColumnIndexOrThrow(FAMILY_NAME));
+                nameCursor.close();
+
+                String phoneNumber = "";
+                String email = "";
+                int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(HAS_PHONE_NUMBER)));
+                if (hasPhoneNumber > 0) {
+                    // Getting the first phone number from the contact,
+                    // it will be the main phone number which we are
+                    // supposing it is the first one
+                    Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?",
+                                                                new String[] { contact_id }, null);
+                    // We are taking the immediate
+                    phoneCursor.moveToFirst();
+                    phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(NUMBER));
+                    if (phoneNumber.equals("")) { phoneNumber = "No phone number"; }
+                    phoneCursor.close();
+
+                    // Getting the first phone number from the contact,
+                    // it will be the main phone number which we are
+                    // supposing it is the first one
+                    Cursor emailCursor = contentResolver.query(EmailCONTENT_URI, null, EmailCONTACT_ID + " = ?",
+                                                                new String[] { contact_id }, null);
+                    // We are taking the immediate
+                    emailCursor.moveToFirst();
+                    email = emailCursor.getString(emailCursor.getColumnIndexOrThrow(EMAIL));
+                    if (email.equals("")) { email = "No email"; }
+                    emailCursor.close();
+                }
+                PartyListDatabase db = PartyListDatabase.getInstance(getContext());
+                db.getInviteeDao().insert(new Invitee(name,lastName,phoneNumber,email));
+            }
+            cursor.close();
+        }
     }
 }
