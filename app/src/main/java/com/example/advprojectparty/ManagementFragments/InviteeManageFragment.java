@@ -25,6 +25,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ import com.example.advprojectparty.DatabaseElements.Invitee;
 import com.example.advprojectparty.DatabaseElements.PartyListDatabase;
 import com.example.advprojectparty.R;
 import com.example.advprojectparty.StartScreen;
+
+import java.util.Locale;
 
 public class InviteeManageFragment extends Fragment {
 
@@ -82,7 +85,9 @@ public class InviteeManageFragment extends Fragment {
         insertButton.setOnClickListener(v -> {
             String theName = invNameInput.getText().toString();
             String theLastname = invLastNameInput.getText().toString();
-            String thePhone = invPhoneInput.getText().toString();
+            String countryCode = Locale.getDefault().getCountry();
+            String thePhone = PhoneNumberUtils.formatNumber(invPhoneInput.getText().toString(), countryCode);
+            if (thePhone == null) { thePhone = "Invalid number"; }
             String theEmail = invEmailInput.getText().toString();
 
             if (!theName.equals("") && !theLastname.equals("")
