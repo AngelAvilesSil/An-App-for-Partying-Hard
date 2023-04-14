@@ -39,7 +39,7 @@ import com.example.advprojectparty.R;
 
 public class EventManageFragment extends Fragment {
 
-    private static String EVENT_UPDATE = "event_update";
+    public static final String EVENT_UPDATE = "PARTY_EVENT_ADDED";
     Button addEventButton = null;
     EditText eventNameInput = null;
     Switch eventMusicInput = null;

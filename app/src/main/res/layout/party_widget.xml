@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/party_widget"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
-    >
+    android:orientation="vertical"
+    android:paddingStart="3dp">
 
     <TextView
         android:id="@+id/titleTextView"
@@ -17,8 +17,22 @@
         android:textColor="@android:color/black"
         android:textStyle="bold" />
 
-    <ListView
-        android:id="@+id/eventList"
+    <TextView
+        android:id="@+id/eventText1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:text="@string/widget_placholder" />
+
+    <TextView
+        android:id="@+id/eventText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/widget_placholder" />
+
+    <TextView
+        android:id="@+id/eventText3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/widget_placholder" />
+
 </LinearLayout>

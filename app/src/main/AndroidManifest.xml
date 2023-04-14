@@ -2,11 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <uses-permission
-        android:name="android.permission.READ_CONTACTS" />
-
-
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -18,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AdvProjectParty"
         tools:targetApi="31">
+
         <activity
             android:name=".StartScreen"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -41,13 +38,13 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.example.advprojectparty.DB_UPDATE" />
+                <action android:name="PARTY_EVENT_ADDED" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/party_widget_info" />
         </receiver>
-
     </application>
 
 </manifest>
