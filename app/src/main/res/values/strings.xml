@@ -54,4 +54,8 @@
     <string name="music_on">Playing</string>
     <string name="music_off">Not playing</string>
     <string name="enter_contacts_button">Invite all your contacts!</string>
+
+    <!--Widget string(s)-->
+    <string name="widget_title">Event Todo List</string>
+
 </resources>
