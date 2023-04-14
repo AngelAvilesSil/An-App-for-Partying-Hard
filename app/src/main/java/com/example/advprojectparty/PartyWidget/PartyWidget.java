@@ -1,4 +1,4 @@
-package com.example.advprojectparty;
+package com.example.advprojectparty.PartyWidget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -7,6 +7,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.example.advprojectparty.R;
+import com.example.advprojectparty.StartScreen;
 
 public class PartyWidget extends AppWidgetProvider {
 
@@ -27,6 +30,7 @@ public class PartyWidget extends AppWidgetProvider {
 
             //add the pending intent to the onclick event, so that it will go to the app when we touch the widget
             views.setOnClickPendingIntent(R.id.party_widget, pendingIntent);
+
 
             // get the names to display on the app widget
             // access the events using a DAO then display them on the widget
