@@ -32,6 +32,12 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <receiver android:name=".BCReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON"></action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
