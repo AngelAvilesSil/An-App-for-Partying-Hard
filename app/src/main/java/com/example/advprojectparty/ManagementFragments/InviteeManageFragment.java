@@ -21,6 +21,7 @@ package com.example.advprojectparty.ManagementFragments;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ import java.util.Locale;
 
 public class InviteeManageFragment extends Fragment {
 
+    private static String INVITE_UPDATE = "invite_update";
     Button insertButton = null;
     Button contactButton = null;
     EditText invNameInput = null;
@@ -101,6 +103,10 @@ public class InviteeManageFragment extends Fragment {
 
                 Toast t = Toast.makeText(getContext(), "You have a new invitee!", Toast.LENGTH_SHORT);
                 t.show();
+
+                Intent intent = new Intent(INVITE_UPDATE);
+                // broadcast the completion
+                getActivity().sendBroadcast(intent);
             }
             else
             {

@@ -1,4 +1,5 @@
 <resources>
+    <!---->
     <string name="app_name">UltimateProjectParty</string>
     <string name="invited_title">Manage Invitees</string>
     <string name="shopping_title">Manage Shopping</string>
@@ -42,6 +43,7 @@
     <string name="on_off_input">on/off</string>
     <string name="event_hint">Dancing aound!</string>
 
+    <!--event input texts-->
     <string name="music_enter">Play music:</string>
     <string name="food_enter">Serve food:</string>
     <string name="snack_enter">Serve snacks:</string>
@@ -54,4 +56,9 @@
     <string name="music_on">Playing</string>
     <string name="music_off">Not playing</string>
     <string name="enter_contacts_button">Invite all your contacts!</string>
+
+    <!--Widget string(s)-->
+    <string name="widget_title">Top Events</string>
+    <string name="widget_placholder">Loading...</string>
+
 </resources>
