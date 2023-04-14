@@ -19,6 +19,7 @@
  */
 package com.example.advprojectparty.ManagementFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ import com.example.advprojectparty.R;
 
 public class EventManageFragment extends Fragment {
 
+    private static String EVENT_UPDATE = "event_update";
     Button addEventButton = null;
     EditText eventNameInput = null;
     Switch eventMusicInput = null;
@@ -123,6 +125,10 @@ public class EventManageFragment extends Fragment {
 
                     Toast t = Toast.makeText(getContext(), "Event added", Toast.LENGTH_SHORT);
                     t.show();
+
+                    Intent intent = new Intent(EVENT_UPDATE);
+                    // broadcast the completion
+                    getActivity().sendBroadcast(intent);
                 }
                 else {
                     Toast t = Toast.makeText(getContext(), "Nothing can be empty", Toast.LENGTH_SHORT);
