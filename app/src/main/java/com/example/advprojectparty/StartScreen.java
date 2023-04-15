@@ -12,6 +12,8 @@ package com.example.advprojectparty;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +50,9 @@ public class StartScreen extends AppCompatActivity {
     }
     public static Context getContextOfApplication() { return contextOfApplication; }
 
+    // broadcast receiver
+    BCReceiver receiver = new BCReceiver();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,13 @@ public class StartScreen extends AppCompatActivity {
         // This should pull the database or create it
         // with all its components if it does not exists
         database = new PartyListDB(this);
+
+        // setting up the broadcast receiver for the welcome back message
+        IntentFilter intentFilter = new IntentFilter(); intentFilter.addAction(Intent.ACTION_SCREEN_ON);
+
+        if (receiver != null) {
+            registerReceiver(receiver, intentFilter);
+        }
     }
 
 
@@ -175,6 +187,14 @@ public class StartScreen extends AppCompatActivity {
                 } catch (Exception e) { e.printStackTrace(); return super.onOptionsItemSelected(item);}
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // gotta unregister the receiver
+    public void onDestroy() {
+        super.onDestroy();
+        if(receiver != null){
+            unregisterReceiver(receiver);
         }
     }
 }
