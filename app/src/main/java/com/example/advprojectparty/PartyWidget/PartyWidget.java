@@ -8,6 +8,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.advprojectparty.DatabaseElements.Event;
@@ -67,6 +68,8 @@ public class PartyWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+
+        Log.d("Appwidget", "I did receive a broadcast, but... will I do anything about it?");
 
         //if the party database has been updated, then update our widget
         if (intent.getAction().equals(EventManageFragment.EVENT_UPDATE)) {

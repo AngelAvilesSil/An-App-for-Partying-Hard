@@ -40,8 +40,10 @@ public class StartScreen extends AppCompatActivity {
 
     PartyListDB database = null;
     private static boolean grantedContacts = false;
+    private static boolean grantedNotifications = false;
     private static Context contextOfApplication;
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    private static final int PERMISSIONS_REQUEST_POST_NOTIFICATIONS = 2;
 
     // Accessor that will serve as a switch for the
     // contacts addition
@@ -49,6 +51,10 @@ public class StartScreen extends AppCompatActivity {
         return grantedContacts;
     }
     public static Context getContextOfApplication() { return contextOfApplication; }
+
+
+    //intent for setting up the service to run when we close and reopen
+    private Intent amazingServiceIntent;
 
     // broadcast receiver
     BCReceiver receiver = new BCReceiver();
@@ -63,9 +69,15 @@ public class StartScreen extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.start_title));
         contextOfApplication = getApplicationContext();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-            && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+        //check if we have our permissions
+        //if not, prompt the user
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+            }
+            if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, PERMISSIONS_REQUEST_POST_NOTIFICATIONS);
+            }
         } else {
             grantedContacts = true;
         }
@@ -74,9 +86,11 @@ public class StartScreen extends AppCompatActivity {
         // with all its components if it does not exists
         database = new PartyListDB(this);
 
+        //initialize the intent for controlling the amazingService from this activity
+        amazingServiceIntent = new Intent(StartScreen.this, AmazingService.class);
+
         // setting up the broadcast receiver for the welcome back message
         IntentFilter intentFilter = new IntentFilter(); intentFilter.addAction(Intent.ACTION_SCREEN_ON);
-
         if (receiver != null) {
             registerReceiver(receiver, intentFilter);
         }
@@ -95,6 +109,13 @@ public class StartScreen extends AppCompatActivity {
                     // actually, the bool is the only thing that
                     // will permit the button to add the contacts
                     // to work, otherwise it will do nothing
+                    Log.d("My App", "permission denied");
+                }
+            }
+            case PERMISSIONS_REQUEST_POST_NOTIFICATIONS: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    grantedNotifications = true;
+                } else {
                     Log.d("My App", "permission denied");
                 }
             }
@@ -188,13 +209,41 @@ public class StartScreen extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    } //onOptions menu selected
+
+    @Override
+    protected void onPause() {
+        startService(amazingServiceIntent);
+
+        Log.d("StartScreen","Pausing! start annoying the user");
+
+        //now we pause
+        super.onPause();
     }
 
-    // gotta unregister the receiver
-    public void onDestroy() {
-        super.onDestroy();
+    @Override
+    protected void onResume() {
+        //resume first
+        super.onResume();
+
+        Log.d("StartScreen","Resuming! stop annoying the user");
+
+        //stop annoying the user while they use our app
+        stopService(amazingServiceIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        //leave them alone if they've closed the app
+        stopService(amazingServiceIntent);
+        Log.d("StartScreen","Destroying! stop annoying the user");
+
+        //Unregister the reciever
         if(receiver != null){
             unregisterReceiver(receiver);
         }
+
+        //call the original method to clean up
+        super.onDestroy();
     }
 }

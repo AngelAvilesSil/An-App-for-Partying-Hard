@@ -126,8 +126,8 @@ public class EventManageFragment extends Fragment {
                     Toast t = Toast.makeText(getContext(), "Event added", Toast.LENGTH_SHORT);
                     t.show();
 
-                    Intent intent = new Intent(EVENT_UPDATE);
                     // broadcast the completion
+                    Intent intent = new Intent(EVENT_UPDATE);
                     getActivity().sendBroadcast(intent);
                 }
                 else {
