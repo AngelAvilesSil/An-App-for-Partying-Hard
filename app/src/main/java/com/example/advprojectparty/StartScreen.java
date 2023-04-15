@@ -13,6 +13,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,8 +52,12 @@ public class StartScreen extends AppCompatActivity {
     }
     public static Context getContextOfApplication() { return contextOfApplication; }
 
+
     //intent for setting up the service to run when we close and reopen
     private Intent amazingServiceIntent;
+
+    // broadcast receiver
+    BCReceiver receiver = new BCReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,12 @@ public class StartScreen extends AppCompatActivity {
 
         //initialize the intent for controlling the amazingService from this activity
         amazingServiceIntent = new Intent(StartScreen.this, AmazingService.class);
+
+        // setting up the broadcast receiver for the welcome back message
+        IntentFilter intentFilter = new IntentFilter(); intentFilter.addAction(Intent.ACTION_SCREEN_ON);
+        if (receiver != null) {
+            registerReceiver(receiver, intentFilter);
+        }
     }
 
 
@@ -225,8 +236,12 @@ public class StartScreen extends AppCompatActivity {
     protected void onDestroy() {
         //leave them alone if they've closed the app
         stopService(amazingServiceIntent);
-
         Log.d("StartScreen","Destroying! stop annoying the user");
+
+        //Unregister the reciever
+        if(receiver != null){
+            unregisterReceiver(receiver);
+        }
 
         //call the original method to clean up
         super.onDestroy();
