@@ -19,6 +19,7 @@
 
 package com.example.advprojectparty.ManagementFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ import com.example.advprojectparty.R;
 
 public class ShopManageFragment extends Fragment {
 
+    private static String SHOP_UPDATE = "shop_update";
     Button addItemButton = null;
     EditText shopItemInput = null;
     Spinner typeSpinner = null;
@@ -111,6 +113,10 @@ public class ShopManageFragment extends Fragment {
 
                     Toast t = Toast.makeText(getContext(), "Item added", Toast.LENGTH_SHORT);
                     t.show();
+
+                    Intent intent = new Intent(SHOP_UPDATE);
+                    // broadcast the completion
+                    getActivity().sendBroadcast(intent);
                 }
                 else {
                     Toast t = Toast.makeText(getContext(), "Nothing can be empty", Toast.LENGTH_SHORT);

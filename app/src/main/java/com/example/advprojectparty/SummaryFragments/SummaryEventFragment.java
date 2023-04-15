@@ -51,12 +51,12 @@ public class SummaryEventFragment extends Fragment {
         // Starting to inflate the layout for this fragment
         View thisView = inflater.inflate(R.layout.fragment_summary_event, container, false);
         myEventList = thisView.findViewById(R.id.eventList);
-        setEventScreen(dummyEvent);
+        myEventList.setAdapter(setEventScreen(dummyEvent));
         getEventsFromRoom();
         // Inflated the layout for this fragment
         return thisView;
     }
-    private void setEventScreen(ArrayList<Event> events) {
+    public SimpleCursorAdapter setEventScreen(ArrayList<Event> events) {
 
         String[] columns = {
                 PartyListDB.EVENT_NAME, PartyListDB.EVENT_MUSIC,
@@ -87,7 +87,7 @@ public class SummaryEventFragment extends Fragment {
                 getContext(), R.layout.event_list_item,cursor,columns,to,0
         );
 
-        myEventList.setAdapter(adapter);
+        return adapter;
     }
 
     private void getEventsFromRoom() {
