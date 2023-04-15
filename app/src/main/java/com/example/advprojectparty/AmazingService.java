@@ -36,7 +36,7 @@ public class AmazingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //start a timer that annoys the user to come back
-        annoyTimer.scheduleAtFixedRate(new Annoy(), 10_000, 30_000); //wait 10 seconds, then annoy every 3 minutes
+        annoyTimer.scheduleAtFixedRate(new Annoy(), 10_000, 60_000); //wait 10 seconds, then annoy every 1 minute
         return START_STICKY;
     }
 
@@ -50,7 +50,7 @@ public class AmazingService extends Service {
     private class Annoy extends TimerTask {
         @Override
         public void run() {
-            setNotification("Hey!", "Are you ready to party?", "Come and plan out your next party!");
+            setNotification("Hey!", "Where did you go?", "Come and plan out your next party!");
         }
     }
 
@@ -65,7 +65,7 @@ public class AmazingService extends Service {
         CharSequence tickerText = ticker;
         CharSequence contentTitle = title;
         CharSequence contentText = text;
-        int icon = R.drawable.ic_launcher_background;
+        int icon = R.drawable.ic_launcher_foreground;
 
         NotificationCompat.Builder myBuilder = new NotificationCompat.Builder(this, NOTIF_CHANNEL)
                 .setSmallIcon(icon)
