@@ -39,8 +39,10 @@ public class StartScreen extends AppCompatActivity {
 
     PartyListDB database = null;
     private static boolean grantedContacts = false;
+    private static boolean grantedNotifications = false;
     private static Context contextOfApplication;
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    private static final int PERMISSIONS_REQUEST_POST_NOTIFICATIONS = 2;
 
     // Accessor that will serve as a switch for the
     // contacts addition
@@ -62,9 +64,15 @@ public class StartScreen extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.start_title));
         contextOfApplication = getApplicationContext();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-            && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+        //check if we have our permissions
+        //if not, prompt the user
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+            }
+            if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, PERMISSIONS_REQUEST_POST_NOTIFICATIONS);
+            }
         } else {
             grantedContacts = true;
         }
@@ -90,6 +98,13 @@ public class StartScreen extends AppCompatActivity {
                     // actually, the bool is the only thing that
                     // will permit the button to add the contacts
                     // to work, otherwise it will do nothing
+                    Log.d("My App", "permission denied");
+                }
+            }
+            case PERMISSIONS_REQUEST_POST_NOTIFICATIONS: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    grantedNotifications = true;
+                } else {
                     Log.d("My App", "permission denied");
                 }
             }

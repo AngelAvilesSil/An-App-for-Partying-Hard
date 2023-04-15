@@ -19,6 +19,7 @@ public class AmazingService extends Service {
     }
 
     private Timer annoyTimer;
+    private static final String NOTIF_CHANNEL = "Annoy User";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -35,7 +36,7 @@ public class AmazingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //start a timer that annoys the user to come back
-        annoyTimer.scheduleAtFixedRate(new Annoy(), 10_000, 5_000); //wait 10 seconds, then annoy every 3 minutes
+        annoyTimer.scheduleAtFixedRate(new Annoy(), 10_000, 30_000); //wait 10 seconds, then annoy every 3 minutes
         return START_STICKY;
     }
 
@@ -53,8 +54,6 @@ public class AmazingService extends Service {
         }
     }
 
-
-
     //code to build a notification
     protected void setNotification(String ticker, String title, String text) {
         Intent notificationIntent = new Intent(this, StartScreen.class);
@@ -68,7 +67,7 @@ public class AmazingService extends Service {
         CharSequence contentText = text;
         int icon = R.drawable.ic_launcher_background;
 
-        NotificationCompat.Builder myBuilder = new NotificationCompat.Builder(this, "Party Time")
+        NotificationCompat.Builder myBuilder = new NotificationCompat.Builder(this, NOTIF_CHANNEL)
                 .setSmallIcon(icon)
                 .setTicker(tickerText)
                 .setContentTitle(contentTitle)
@@ -83,9 +82,9 @@ public class AmazingService extends Service {
             //If you need more, this URL has a good explanation of new things
             //https://developer.android.com/training/notify-user/build-notification.html
 
-            CharSequence name = "My Channel Name";
-            String description = "My much larger channel description";
-            NotificationChannel channel = new NotificationChannel("My Channel", name, NotificationManager.IMPORTANCE_DEFAULT);
+            CharSequence name = NOTIF_CHANNEL;
+            String description = "Notifications that annoy the user if they are not using the app";
+            NotificationChannel channel = new NotificationChannel(NOTIF_CHANNEL, name, NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(description);
             // Register the channel with the system
             manager.createNotificationChannel(channel);
