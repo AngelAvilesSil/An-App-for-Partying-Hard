@@ -12,6 +12,7 @@ package com.example.advprojectparty;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +49,9 @@ public class StartScreen extends AppCompatActivity {
     }
     public static Context getContextOfApplication() { return contextOfApplication; }
 
+    //intent for setting up the service to run when we close and reopen
+    private Intent amazingServiceIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +72,9 @@ public class StartScreen extends AppCompatActivity {
         // This should pull the database or create it
         // with all its components if it does not exists
         database = new PartyListDB(this);
+
+        //initialize the intent for controlling the amazingService from this activity
+        amazingServiceIntent = new Intent(StartScreen.this, AmazingService.class);
     }
 
 
@@ -176,5 +183,37 @@ public class StartScreen extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    } //onOptions menu selected
+
+    @Override
+    protected void onPause() {
+        startService(amazingServiceIntent);
+
+        Log.d("StartScreen","Pausing! start annoying the user");
+
+        //now we pause
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        //resume first
+        super.onResume();
+
+        Log.d("StartScreen","Resuming! stop annoying the user");
+
+        //stop annoying the user while they use our app
+        stopService(amazingServiceIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        //leave them alone if they've closed the app
+        stopService(amazingServiceIntent);
+
+        Log.d("StartScreen","Destroying! stop annoying the user");
+
+        //call the original method to clean up
+        super.onDestroy();
     }
 }

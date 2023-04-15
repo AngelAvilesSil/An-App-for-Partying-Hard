@@ -14,6 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AdvProjectParty"
         tools:targetApi="31">
+        <service
+            android:name=".AmazingService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
 
         <activity
             android:name=".StartScreen"
